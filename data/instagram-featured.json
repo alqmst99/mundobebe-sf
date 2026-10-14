@@ -5,7 +5,7 @@
       "title": "Jardineritos de algodón",
       "category": "Nueva temporada",
       "description": "Suaves, cómodos y delicados, disponibles en distintos talles y colores. Consultanos por disponibilidad.",
-      "image": "assets/instagram/jardinerito.webp",
+      "image": "./assets/instagram/jardinerito.webp",
       "postUrl": "https://www.instagram.com/p/Dd1qLjUFFg1/?img_index=5"
     },
     {
@@ -13,7 +13,7 @@
       "title": "Shorts de algodón con voladitos",
       "category": "Nueva temporada",
       "description": "Shorts livianos, frescos y suaves, con detalle de volados. Consultanos por colores y talles.",
-      "image": "assets/instagram/shorts-volados.webp",
+      "image": "./assets/instagram/shorts-volados.webp",
       "postUrl": "https://www.instagram.com/p/Dd3_31iFMu2/?img_index=4"
     },
     {
@@ -21,7 +21,7 @@
       "title": "Vestiditos de algodón y lycra",
       "category": "Nueva temporada",
       "description": "Vestiditos estilo musculosa, frescos y cómodos, con distintos estampados para elegir.",
-      "image": "assets/instagram/vestidito.webp",
+      "image": "./assets/instagram/vestidito.webp",
       "postUrl": "https://www.instagram.com/p/Dd6dsLYFIZ_/?img_index=6"
     },
     {
@@ -29,7 +29,7 @@
       "title": "Shorts de algodón con estrellitas",
       "category": "Nueva temporada",
       "description": "Shorts livianos, frescos y cómodos, con estampado de estrellitas. Consultanos por modelos y talles.",
-      "image": "assets/instagram/shorts-estrellitas.webp",
+      "image": "./assets/instagram/shorts-estrellitas.webp",
       "postUrl": "https://www.instagram.com/p/Dd9ASmkFIwx/?img_index=4"
     }
   ]
