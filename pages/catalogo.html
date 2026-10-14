@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo — Mundo Bebé SF</title>
+  <meta name="description" content="Catálogo completo de ropa, bodies, pijamas, mantitas y accesorios para bebé. Precios y stock actualizados. Pedidos por WhatsApp.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mundobebe.sf/pages/catalogo.html">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span id="topbar-hours">Cargando horarios…</span>
+    <a href="https://www.instagram.com/mundobebe.sf/" target="_blank" rel="noopener">Instagram @mundobebe.sf</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="../index.html" class="brand">
+      <span class="brand-mark"><img src="../assets/instagram/logo.jpg" alt="Logo de Mundo Bebé SF"></span>
+      <span class="brand-name" id="brand-name">Mundo Bebé SF</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="catalogo.html" class="active">Catálogo</a></li>
+      <li><a href="../index.html#nosotros">Nosotros</a></li>
+      <li><a href="../index.html#contacto">Contacto</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn" id="cart-open-btn" aria-label="Abrir carrito">
+        🛒<span class="cart-badge" id="cart-badge">0</span>
+      </button>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </nav>
+</header>
+
+<section class="section" style="padding-top:40px">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <h2>Nuestro catálogo</h2>
+        <p>Precios y fotos reales. Buscá por nombre o filtrá por categoría. Armá el carrito y pedí por WhatsApp.</p>
+      </div>
+    </div>
+
+    <section class="categories" style="padding:0 0 24px">
+      <div class="cat-scroll" id="cat-scroll">
+        <button class="cat-chip active" data-cat="all">Todos</button>
+      </div>
+    </section>
+
+    <div class="catalog-toolbar reveal">
+      <input type="search" id="product-search" placeholder="Buscar producto, marca..." autocomplete="off">
+      <span id="product-count" class="product-count"></span>
+    </div>
+
+    <div id="catalog-loading" class="catalog-loading">Cargando catálogo…</div>
+    <div class="grid" id="product-grid" style="display:none">
+      <!-- productos inyectados por JS -->
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <h4 id="footer-brand">Mundo Bebé SF</h4>
+      <p>Ropa, mantitas y accesorios para los más pequeñitos. Pedidos por WhatsApp.</p>
+    </div>
+    <div>
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="../index.html#contacto">Contacto</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="terminos.html">Términos y condiciones</a></li>
+        <li><a href="privacidad.html">Política de privacidad</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li id="footer-email">—</li>
+        <li id="footer-address">—</li>
+        <li><a href="https://www.instagram.com/mundobebe.sf/" target="_blank" rel="noopener">@mundobebe.sf</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© <span id="year"></span> Mundo Bebé SF. Todos los derechos reservados.</div>
+</footer>
+
+<button class="fab-whatsapp" id="fab-whatsapp" aria-label="Escribinos por WhatsApp">📲</button>
+<!-- <button class="fab-cart" id="fab-cart" aria-label="Abrir carrito">
+  🛒<span class="cart-badge" id="cart-badge-2">0</span>
+</button> -->
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="cart-drawer" aria-label="Carrito de compras">
+  <div class="drawer-head">
+    <h3>Tu carrito</h3>
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar carrito">✕</button>
+  </div>
+  <div class="drawer-items" id="drawer-items"></div>
+  <div class="drawer-foot">
+    <div class="drawer-total"><span>Total</span><span id="drawer-total">$0</span></div>
+    <button class="btn btn-whatsapp btn-block" id="checkout-btn">Pedir por WhatsApp 📲</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script src="../js/config.js"></script>
+<script src="../js/store.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+# Mundo Bebé SF
+
+> Tienda de ropa, mantitas y accesorios para bebé en Santa Fe, Argentina. Pedidos por WhatsApp. Envíos a domicilio.
+
+## About
+
+Mundo Bebé SF ofrece ropa y accesorios para bebés y niños pequeños: bodies, enterizos, conjuntos, pijamas, mantitas, textiles y calzado. Los clientes arman el carrito en el sitio web y confirman el pedido por WhatsApp. También reciben consultas y novedades por Instagram @mundobebe.sf.
+
+## Site
+
+- Home: https://mundobebe.sf/
+- Catálogo: https://mundobebe.sf/pages/catalogo.html
+- Términos y condiciones: https://mundobebe.sf/pages/terminos.html
+- Política de privacidad: https://mundobebe.sf/pages/privacidad.html
+- Instagram: https://www.instagram.com/mundobebe.sf/
+
+## Categories
+
+- Bodies & Enterizos
+- Conjuntos
+- Pijamas
+- Accesorios
+- Mantitas & Textiles
+- Calzado
+
+## How to order
+
+1. Browse the catalog on the website.
+2. Add products to the cart.
+3. Checkout opens WhatsApp with a pre-filled order message.
+4. Confirm stock, shipping and payment with the store via chat.
+
+## Contact
+
+- Instagram: @mundobebe.sf
+- Location: Santa Fe, Argentina
+- Orders: WhatsApp (number configured on the site)
+
+## Optional
+
+- Sitemap: https://mundobebe.sf/sitemap.xml
+- Robots: https://mundobebe.sf/robots.txt
