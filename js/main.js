@@ -8,6 +8,25 @@
       : "pages/producto.html?id=" + encodeURIComponent(id);
   }
 
+function getImageBase() {
+  // Si estamos dentro de /pages/ necesitamos subir un nivel
+  if (location.pathname.includes("/pages/")) {
+    return "../";
+  }
+  return "./";
+}
+
+function resolveImage(src) {
+  if (!src) return "";
+  // URLs absolutas o data URI no se tocan
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
+    return src;
+  }
+  // Quitamos posibles "./" o "/" del inicio
+  const clean = src.replace(/^\.?\/+/, "");
+  return getImageBase() + clean;
+}
+
   let activeCategory = "all";
   let searchQuery = "";
   let visibleCount = 24;
@@ -171,7 +190,7 @@
     const slice = products.slice(0, visibleCount);
     grid.innerHTML = slice
       .map((p) => {
-        const img = p.image || placeholderImage(p.category, p.name);
+        const img = resolveImage(p.image || placeholderImage(p.category, p.name));
         const out = p.stock <= 0;
         const safeName = (p.name || "").replace(/"/g, "&quot;");
         const hasSale =
@@ -230,7 +249,7 @@
     }
     grid.innerHTML = products
       .map((p) => {
-        const img = p.image || placeholderImage(p.category, p.name);
+        const img = resolveImage(p.image || placeholderImage(p.category, p.name));
         const out = p.stock <= 0;
         const safeName = (p.name || "").replace(/"/g, "&quot;");
         const href = productUrl(p.id);
