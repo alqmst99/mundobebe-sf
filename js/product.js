@@ -1,6 +1,43 @@
 /**
  * Ficha de producto — detalle completo e-commerce ropa bebé
  */
+
+
+
+/**
+ * Devuelve el prefijo correcto según la página actual.
+ * Raíz → "./"
+ * Subpáginas (producto.html, etc.) → "../"
+ */
+function getImageBase() {
+  const path = location.pathname;
+
+  if (
+    path === "/" ||
+    path.endsWith("/") ||
+    path.endsWith("/index.html") ||
+    path.endsWith("index.html")
+  ) {
+    return "./";
+  }
+  return "../";
+}
+
+/**
+ * Normaliza cualquier ruta de imagen para que funcione en la página actual.
+ */
+function resolveImage(src) {
+  if (!src) return "";
+  // Si ya es URL absoluta o data URI, no la tocamos
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
+    return src;
+  }
+  // Quitamos posibles "./" o "/" del inicio
+  const clean = src.replace(/^\.?\/+/, "");
+  return getImageBase() + clean;
+}
+
+
 (function () {
   if (!document.getElementById("pdp-root")) return;
 
@@ -110,32 +147,38 @@
     window.open(waLink(lines.join("\n")), "_blank");
   }
 
-  function renderGallery(p) {
-    const imgs = [...new Set([...(p.images || []), p.image].filter(Boolean))];
-    if (!imgs.length) imgs.push(placeholderImage(p.category, p.name));
-    currentImg = Math.min(currentImg, imgs.length - 1);
-    const main = imgs[currentImg] || placeholderImage(p.category, p.name);
-    return `
-      <div class="pdp-gallery">
-        <div class="pdp-main-img">
-          <img id="pdp-main-photo" src="${main}" alt="${p.name}" referrerpolicy="no-referrer">
-          ${imgs.length > 1 ? `
-          <button type="button" class="pdp-gallery-nav prev" data-gallery-step="-1" aria-label="Ver foto anterior">‹</button>
-          <button type="button" class="pdp-gallery-nav next" data-gallery-step="1" aria-label="Ver foto siguiente">›</button>
-          <span class="pdp-gallery-count" id="pdp-gallery-count" aria-live="polite">${currentImg + 1} / ${imgs.length}</span>
-          ` : ""}
-        </div>
-        ${imgs.length > 1 ? `
-        <div class="pdp-thumbs">
-          ${imgs.map((src, i) => `
-            <button type="button" class="pdp-thumb ${i === currentImg ? "active" : ""}" data-thumb="${i}" aria-label="Foto ${i + 1}">
-              <img src="${src}" alt="" referrerpolicy="no-referrer">
-            </button>
-          `).join("")}
-        </div>` : ""}
-      </div>
-    `;
+function renderGallery(p) {
+  const imgs = [...new Set([...(p.images || []), p.image].filter(Boolean))]
+    .map(resolveImage);   // ← acá se corrigen las rutas
+
+  if (!imgs.length) {
+    imgs.push(resolveImage(placeholderImage(p.category, p.name)));
   }
+
+  currentImg = Math.min(currentImg, imgs.length - 1);
+  const main = imgs[currentImg] || resolveImage(placeholderImage(p.category, p.name));
+
+  return `
+    <div class="pdp-gallery">
+      <div class="pdp-main-img">
+        <img id="pdp-main-photo" src="${main}" alt="${p.name}" referrerpolicy="no-referrer">
+        ${imgs.length > 1 ? `
+        <button type="button" class="pdp-gallery-nav prev" data-gallery-step="-1" aria-label="Ver foto anterior">‹</button>
+        <button type="button" class="pdp-gallery-nav next" data-gallery-step="1" aria-label="Ver foto siguiente">›</button>
+        <span class="pdp-gallery-count" id="pdp-gallery-count" aria-live="polite">${currentImg + 1} / ${imgs.length}</span>
+        ` : ""}
+      </div>
+      ${imgs.length > 1 ? `
+      <div class="pdp-thumbs">
+        ${imgs.map((src, i) => `
+          <button type="button" class="pdp-thumb ${i === currentImg ? "active" : ""}" data-thumb="${i}" aria-label="Foto ${i + 1}">
+            <img src="${src}" alt="" referrerpolicy="no-referrer">
+          </button>
+        `).join("")}
+      </div>` : ""}
+    </div>
+  `;
+}
 
   function renderInfo(p) {
     const out = p.stock <= 0;
@@ -265,37 +308,40 @@
     document.getElementById("pdp-buy")?.addEventListener("click", buyNowWhatsApp);
   }
 
-  function renderRelated(p) {
-    const related = Store.getProducts()
-      .filter((x) => x.category === p.category && x.id !== p.id)
-      .slice(0, 4);
-    const wrap = document.getElementById("pdp-related");
-    const grid = document.getElementById("related-grid");
-    if (!related.length || !grid) {
-      if (wrap) wrap.style.display = "none";
-      return;
-    }
-    wrap.style.display = "";
-    grid.innerHTML = related.map((r) => {
-      const img = r.image || placeholderImage(r.category, r.name);
-      const safe = (r.name || "").replace(/"/g, "&quot;");
-      return `
-        <article class="card">
-          <a class="card-link" href="producto.html?id=${encodeURIComponent(r.id)}">
-            <div class="card-media">
-              <img src="${img}" alt="${safe}" loading="lazy" referrerpolicy="no-referrer">
-            </div>
-            <div class="card-body">
-              <span class="card-cat">${Store.getCategoryName(r.category)}</span>
-              <h3 class="card-title">${r.name}</h3>
-              <div class="card-footer">
-                <span class="card-price">${money(r.price)}</span>
-              </div>
-            </div>
-          </a>
-        </article>`;
-    }).join("");
+function renderRelated(p) {
+  const related = Store.getProducts()
+    .filter((x) => x.category === p.category && x.id !== p.id)
+    .slice(0, 4);
+
+  const wrap = document.getElementById("pdp-related");
+  const grid = document.getElementById("related-grid");
+
+  if (!related.length || !grid) {
+    if (wrap) wrap.style.display = "none";
+    return;
   }
+
+  wrap.style.display = "";
+  grid.innerHTML = related.map((r) => {
+    const img = resolveImage(r.image || placeholderImage(r.category, r.name)); // ← acá también
+    const safe = (r.name || "").replace(/"/g, "&quot;");
+    return `
+      <article class="card">
+        <a class="card-link" href="producto.html?id=${encodeURIComponent(r.id)}">
+          <div class="card-media">
+            <img src="${img}" alt="${safe}" loading="lazy" referrerpolicy="no-referrer">
+          </div>
+          <div class="card-body">
+            <span class="card-cat">${Store.getCategoryName(r.category)}</span>
+            <h3 class="card-title">${r.name}</h3>
+            <div class="card-footer">
+              <span class="card-price">${money(r.price)}</span>
+            </div>
+          </div>
+        </a>
+      </article>`;
+  }).join("");
+}
 
   async function init() {
     await Store.init();
