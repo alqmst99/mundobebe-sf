@@ -1835,3 +1835,50 @@ footer a:hover {
 .hero-eyebrow {
   background: rgba(255,255,255,0.95);
 }
+.fab-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366; /* Verde oficial de WhatsApp */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999; /* Asegura que quede por encima de todo */
+    text-decoration: none;
+    
+    /* 1. Activa la animación: nombre, duración, suavizado e infinita */
+    animation: pulso-whatsapp 2s infinite;
+    
+    /* Suaviza transiciones si pones el cursor encima */
+    transition: transform 0.3s ease; 
+}
+
+/* Efecto opcional: se agranda un poco al pasar el mouse */
+.fab-whatsapp:hover {
+    transform: scale(1.1); 
+}
+
+/* 2. La magia del efecto de pulsación */
+@keyframes pulso-whatsapp {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    
+    70% {
+        transform: scale(1);
+        /* Crea la onda expansiva verde que se va estirando */
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
