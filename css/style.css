@@ -67,7 +67,7 @@ body.entry-open {
   overflow: hidden;
   background:
     repeating-linear-gradient(135deg, transparent 0 54px, rgba(86, 117, 110, 0.045) 54px 55px),
-    linear-gradient(145deg, #f5e6e5 0%, #fbf9f2 54%, #dcece8 100%);
+    linear-gradient(160deg, var(--blush-deep) 0%, var(--sky-deep) 100%);
   opacity: 1;
   visibility: visible;
   transition: opacity 0.55s ease, visibility 0.55s ease;
@@ -963,8 +963,8 @@ header.site-header {
 }
 
 /* ---------- About ---------- */
-.about {
-    background: linear-gradient(50deg, #f3ac7985 0%, #7d724e 100%);
+.about {   
+   background: linear-gradient(160deg, var(--blush-deep) 0%, var(--sky-deep) 100%);
     color: white;
     border-radius: var(--radius-lg);
     margin: 0 24px;
