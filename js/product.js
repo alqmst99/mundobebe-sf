@@ -106,6 +106,7 @@ function resolveImage(src) {
     }
     if (line) line.qty += qty;
     else {
+      const rawImg = product.image || (product.images && product.images[0]) || "";
       cart.push({
         id: lineId,
         productId: product.id,
@@ -114,7 +115,9 @@ function resolveImage(src) {
         color: selectedColor,
         name: product.name,
         price: product.price,
-        image: product.image,
+        // Guardar ruta limpia (sin ./ ni ../) para que resolveImage la ajuste según la página
+        image: String(rawImg || "").replace(/^(\.\/|\/)+/, "").replace(/^(\.\.\/)+/, ""),
+        category: product.category,
       });
     }
     setCart(cart);

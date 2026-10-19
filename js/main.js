@@ -22,8 +22,9 @@ function resolveImage(src) {
   if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
     return src;
   }
-  // Quitamos posibles "./" o "/" del inicio
-  const clean = src.replace(/^\.?\/+/, "");
+  // Quitamos posibles "./", "../" o "/" del inicio para recalcular según la página actual
+  let clean = String(src).replace(/^(\.\/|\/)+/, "");
+  while (clean.startsWith("../")) clean = clean.slice(3);
   return getImageBase() + clean;
 }
 
@@ -86,6 +87,7 @@ function resolveImage(src) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     renderCartBadge();
     renderDrawer();
+    window.dispatchEvent(new Event("cart-updated"));
   }
   function addToCart(productId) {
     const product = Store.getProduct(productId);
@@ -100,7 +102,16 @@ function resolveImage(src) {
     if (line) {
       line.qty += 1;
     } else {
-      cart.push({ id: productId, qty: 1 });
+      const rawImg = product.image || (product.images && product.images[0]) || "";
+      cart.push({
+        id: productId,
+        productId: productId,
+        qty: 1,
+        name: product.name,
+        price: product.price,
+        image: String(rawImg || "").replace(/^(\.\/|\/)+/, "").replace(/^(\.\.\/)+/, ""),
+        category: product.category,
+      });
     }
     setCart(cart);
     showToast(`Agregado: ${product.name}`);
@@ -426,19 +437,23 @@ function resolveImage(src) {
     } else {
       wrap.innerHTML = cart
         .map((line) => {
-          const p = resolveProduct(line);
-          if (!p) return "";
-          const img =
+          const p = resolveProduct(line) || {};
+          if (!p.id && !line.name && !line.image) return "";
+          const rawImg =
             line.image ||
             p.image ||
-            placeholderImage(p.category || "bodies", p.name || "");
+            (p.images && p.images[0]) ||
+            "";
+          const img = resolveImage(
+            rawImg || placeholderImage(p.category || "bodies", p.name || line.name || "")
+          );
           const titleExtra = [line.size, line.color]
             .filter(Boolean)
             .join(" · ");
           const displayName =
-            (p.name || line.name || "") +
+            (p.name || line.name || "Producto") +
             (titleExtra ? " (" + titleExtra + ")" : "");
-          const price = line.price != null ? line.price : p.price;
+          const price = line.price != null ? line.price : (p.price != null ? p.price : 0);
           return `
         <div class="cart-item">
           <img src="${img}" alt="${displayName}">
@@ -502,6 +517,8 @@ function resolveImage(src) {
   }
 
   function openDrawer() {
+    renderCartBadge();
+    renderDrawer();
     document.getElementById("cart-drawer")?.classList.add("open");
     document.getElementById("overlay")?.classList.add("open");
   }
@@ -648,17 +665,25 @@ function resolveImage(src) {
     }
 
     window.addEventListener("storage", (e) => {
-      if (e.key === "mundobebe_sf_db_v1") {
-        renderCategories();
-        renderProducts();
-        renderFeatured();
+      if (e.key === CART_KEY || e.key === "mundobebe_sf_db_v1") {
+        renderCartBadge();
         renderDrawer();
+        if (e.key === "mundobebe_sf_db_v1") {
+          renderCategories();
+          renderProducts();
+          if (typeof renderFeatured === "function") renderFeatured();
+        }
       }
       if (e.key === "mundobebe_sf_config_v1") {
         CFG = Store.getConfig();
         paintConfig();
         renderDrawer();
       }
+    });
+
+    window.addEventListener("cart-updated", () => {
+      renderCartBadge();
+      renderDrawer();
     });
   }
 
