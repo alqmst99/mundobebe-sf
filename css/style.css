@@ -143,10 +143,13 @@ body.entry-open {
   color: var(--ink);
   font-size: 38px;
   line-height: 1.05;
+
 }
 .entry-screen h1 em {
-  color: #a66573;
-  font-weight: 500;
+  color: #ff5f81;
+  font-weight: 800;
+
+ 
 }
 .entry-description {
   margin: 14px 0 24px;
