@@ -12,7 +12,7 @@
   --cream-2: #f7f0e8;
   --ink: #2c2a2a;
   --ink-soft: #6b6560;
-  --line: #ede5dc;
+  --line: rgb(228, 119, 255);
   --white: #ffffff;
   --gold: #d4a574;
   --gold-dark: #b8874a;
@@ -1000,7 +1000,7 @@ header.site-header {
   font-family: "Cormorant Garamond", serif;
   font-size: 32px;
   display: block;
-  color: var(--blush-deep);
+  color: #f8e6ed;
 }
 .stat span {
   font-size: 13px;
