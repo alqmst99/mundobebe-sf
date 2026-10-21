@@ -281,7 +281,7 @@ header.site-header {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(253, 251, 247, 0.92);
+  background: rgba(231, 149, 252, 0.42);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
